@@ -1,4 +1,4 @@
-CS344: Web Engineering | Lab 3 | Personal Portfolio
+CS344: Web Engineering | Lab 2+3 | Personal Portfolio
 -|-|-
 
 
