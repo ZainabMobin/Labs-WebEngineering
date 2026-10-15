@@ -10,12 +10,12 @@ body{
 /* logo font */
 @font-face {
     font-family: 'ChangaOne';
-    src: url('/fonts/ChangaOne-Regular.ttf');
+    src: url('./fonts/ChangaOne-Regular.ttf');
 }
 /* hero font */
 @font-face {
     font-family: 'MajorMono';
-    src: url('/fonts/MajorMonoDisplay-Regular.ttf');
+    src: url('./fonts/MajorMonoDisplay-Regular.ttf');
 }
 
 .navbar{
@@ -68,7 +68,7 @@ body{
     min-height: 100vh;
     max-width: 100%;
     background: url(assets/hero-bg.jpg) no-repeat;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.15);
     background-blend-mode: multiply;     
     background-size: cover;
     display: flex;
