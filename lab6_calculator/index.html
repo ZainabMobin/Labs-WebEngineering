@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 6</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h2>Name: Zainab Mobin  |  15th October,26</h2>
+    <h1> Lab 6: JS based calculator</h1>
+
+    <!-- wrapper div for the whole calculator -->
+    <div class="calculator">
+        <!-- the display screen itself -->
+        <div id="display-screen"></div>
+        <!-- making a 5x5 grid of 25 buttons, each is 5rem square buttons -->
+        <div class="button-grid">   
+            <div onclick="MClear()">MC</div>
+            <div onclick="appendElement(0)">0</div>
+            <div onclick="appendElement(1)">1</div>
+            <div onclick="appendElement(2)">2</div>
+            <div onclick="appendElement('+')">+</div>
+            <div onclick="MStore()">MS</div>
+            <div onclick="appendElement(3)">3</div>
+            <div onclick="appendElement(4)">4</div>
+            <div onclick="appendElement(5)">5</div>
+            <div onclick="appendElement('-')">-</div>
+            <div onclick="MRecall()">MR</div>
+            <div onclick="appendElement(6)">6</div>
+            <div onclick="appendElement(7)">7</div>
+            <div onclick="appendElement(8)">8</div>
+            <div onclick="appendElement('*')">x</div>
+            <div onclick="MPlus()">M+</div>
+            <div onclick="appendElement(9)">9</div>
+            <div onclick="absolute()">±</div>
+            <div onclick="calculate()">=</div>
+            <div onclick="appendElement('/')">/</div>
+            <div onclick="getInverse()">1/x</div>
+            <div onclick="addPoint()">.</div>
+            <div onclick="getSquare()">x2</div>
+            <div onclick="getSquareRoot()">√</div>
+            <div onclick="reset()">C</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

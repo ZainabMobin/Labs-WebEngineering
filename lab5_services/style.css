@@ -1,0 +1,187 @@
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva;
+    background-color: black;
+    color: white;
+}
+/* logo font */
+@font-face {
+    font-family: 'ChangaOne';
+    src: url('/fonts/ChangaOne-Regular.ttf');
+}
+/* hero font */
+@font-face {
+    font-family: 'MajorMono';
+    src: url('/fonts/MajorMonoDisplay-Regular.ttf');
+}
+
+.navbar{
+    height: 4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(255, 213, 96);
+}
+.navbar ul{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+.navbar ul li{
+    flex-direction: row;
+    padding-right: 2.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: auto;
+    max-height: auto;
+}
+.navbar a{
+    color: black;
+    text-decoration: none;
+}
+.navbar ul li a:hover{
+    animation: underline-slide .2s linear forwards; 
+}
+
+@keyframes underline-slide{
+    from {
+        border-bottom: 0 solid black;
+    } to{
+        border-bottom: 10px solid black;
+    }
+}
+.logo{
+    display: flex;
+    flex-direction: row;
+    padding-left: 3rem;
+    color: black;
+}
+.logo p{
+    font-family: 'ChangaOne', 'Segoe UI', Tahoma, Geneva;
+    font-size: 1.5rem;
+}
+.hero{
+    min-height: 100vh;
+    max-width: 100%;
+    background: url(assets/hero-bg.jpg) no-repeat;
+    background-color: rgba(0, 0, 0, 0.1);
+    background-blend-mode: multiply;     
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+.hero h1{
+    font-family: 'MajorMono', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 6rem;
+    color:  rgb(255, 213, 96);
+    color: white;
+    margin: 10rem 2rem 4rem 7rem;
+    text-shadow: .2rem .2rem .2rem orange;
+}
+.hero a{
+    text-decoration: none;
+    margin: 3rem auto auto 7rem;
+    padding: 1rem;
+    width: 7rem;
+    border: none;
+    color: black;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: white;
+    text-align: center;
+}
+.hero .cta-btn:hover{
+    background-color:  rgb(255, 213, 96);
+}
+h2{
+    color:  rgb(255, 213, 96);
+    font-family: 'MajorMono', 'Segoe UI', Tahoma, Geneva;
+    font-size: 3rem;
+    margin: 5rem auto 3rem 6rem;
+}
+.service-grid{
+    margin: 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, 23rem);
+    grid-template-rows: repeat(1, 23rem);
+    gap: 4rem;
+
+}
+.grid-item{
+    border-style: solid;
+    border-color:  rgb(255, 213, 96);
+    border-width: .07rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: scale 0.5s linear;
+}
+.grid-item:hover{
+    scale: 1.07;
+}
+.grid-item img{
+    flex: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 10rem;
+    margin-top: 1rem;
+}
+.grid-item p{
+    margin: 1rem 0 1rem 0 ;
+}
+.grid-item h3{
+    margin-top: auto;
+    
+}
+
+.contact{
+    margin: 0 10rem;
+    font-size: 1.2rem;
+    line-height: 2rem;
+}
+.contact a{
+    text-decoration: none;
+    color: white;
+}
+.contact a:hover{
+    text-decoration: underline;
+}
+hr{
+    margin: 3rem;
+    opacity: 50%;
+}
+footer{
+    color:   rgb(255, 213, 96) ;
+    text-align: center;
+    margin: 2rem;
+}
+.slogan{
+    font-family: 'ChangaOne', 'Segoe UI', Tahoma, Geneva;
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+
+@media (max-width: 768px){
+    .service-grid{
+        margin: 4rem;
+        display: grid;
+        grid-template-columns: repeat(1, 23rem);
+        grid-template-rows: repeat(1, 23rem);
+        gap: 4rem;
+    }
+}
+@media (min-width: 769px) and (max-width: 1024px){
+    .service-grid{
+        margin: 4rem;
+        display: grid;
+        grid-template-columns: repeat(2, 23rem);
+        grid-template-rows: repeat(1, 23rem);
+        gap: 4rem;
+    }
+}
