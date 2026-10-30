@@ -2,9 +2,11 @@ var mode = "month" //default monthly view is set
 var curr_date = new Date() //global reference to current viewing date
 var activeDateKey = null; // Currently selected date key for the task panel
 var taskStore = {}; //store task per date ie key is date, value is memo info
+var activeDate = new Date();
 
 function initializeView(){
     curr_date = new Date();
+    activeDate = new Date();
     mode = "month";
     document.querySelector('.switch-btn').textContent = mode;
     document.querySelector('#current-date').textContent = createDateString(curr_date);
@@ -105,6 +107,7 @@ function switchMode(){
 // month: 0-11
 // year: integer year
 function renderCalendar(view, year, month, date){
+
     document.querySelector('#current-date').textContent = createDateString(curr_date); //update master date
     
     const grid = document.querySelector('#cell-grid');
@@ -118,20 +121,22 @@ function renderCalendar(view, year, month, date){
         
         for (let i=0; i<cell_num; i++){
             const cell = document.createElement('div');
+            // all days valid initially
             cell.className = 'day-cell'
             
             const dayNum = i - firstDay + 1;
+            cell.dataset.day = dayNum; //store for access later
+
             // highlight if current selected date is this
             if (dayNum === date){
                 cell.classList.add('current-cell');
             }
-            
-            // console.log("day num: "+ dayNum);
-            // console.log("daysInMonth: "+ daysInMonth);
-            // console.log("first day: "+ firstDay);
+            // preserve active date
+            if(dayNum === activeDate.getDate() ){
+                cell.classList.add('active-cell');
+            }
             if (dayNum < 1 || dayNum > daysInMonth){
                 cell.classList.add('disabled-cell');
-                var extremeMonthDate;
                 if (dayNum < 1){ //previous month, offset is negative
                     cell.textContent = dayNum + getPrevMonthDate(year, month);
                 }
@@ -141,6 +146,25 @@ function renderCalendar(view, year, month, date){
             }
             else { //normal day within the month range
                 cell.textContent = dayNum;
+                const entryDate = new Date(year, month, dayNum);
+                const dateKey = formatDateKey(entryDate);
+
+                const taskList = taskStore[dateKey];
+
+                if (taskList){ //add task dots if tasks written
+                    const taskNum = taskList.length;
+
+                    const dotWrapper = document.createElement("div");
+                    dotWrapper.classList.add('dot-wrapper');
+                    cell.appendChild(dotWrapper);
+                    
+                    for(let i=0; i<taskNum; i++){
+                        const taskDot = document.createElement("div");
+                        taskDot.classList.add('task-dot');
+                        dotWrapper.appendChild(taskDot);
+                        console.log('rendering dot for ', dayNum);
+                    }
+                } 
             }
             grid.appendChild(cell);
         }
@@ -161,15 +185,129 @@ function renderCalendar(view, year, month, date){
                 cellDate.getDate() === curr_date.getDate()){
                 cell.classList.add('current-cell');
             }
-            // Disable extreme days (before/after curr month)
-            if (cellDate.getMonth() !== month){
-                cell.classList.add('disabled-cell');
-            }
-            
+            // weekly view does not have different month days disabled
             cell.textContent = cellDate.getDate();
             grid.appendChild(cell);
         }
     }
+}
+
+function updateActiveDate(date){
+    const month = curr_date.getMonth();
+    const year = curr_date.getFullYear();
+    
+    activeDate = new Date(year, month, date);
+    activeDateKey = formatDateKey(activeDate); //also update key
+    document.querySelector('#current-date').textContent = createDateString(activeDate);
+}
+
+const cellGrid = document.querySelector("#cell-grid");
+cellGrid.addEventListener('click', e => {
+
+    const cell = e.target.closest('.day-cell');
+    // day-cell not clicked!
+    if (!cell) return;
+
+    //day cell clicked, change active cell
+    const prevActive = cellGrid.querySelector(".active-cell");
+    
+    // remove 'active-cell' calss from prevActive ONLY if it is a legal cell
+    // prevActive null: nothing selected previously nothing
+    // prevActive==cell: idempotent behaviour, change nothing if subsequent clicks on same cell    
+    if ( prevActive && prevActive !== cell){
+        prevActive.classList.remove('active-cell');
+    }
+    // add to latsest clicked cell
+    cell.classList.add('active-cell');
+
+    date = parseInt(cell.dataset.day, 10);
+    updateActiveDate(date); //update to active date
+
+    renderCalendar(mode, curr_date.getFullYear(), curr_date.getMonth(), curr_date.getDate());
+    renderTaskPanel();
+    renderTaskList();
+});
+
+function renderTaskPanel(){
+
+    const mainWrapper = document.querySelector(".main-wrapper");
+    const taskPanelWrapper = document.querySelector(".task-panel-wrapper");
+    const taskPanel = taskPanelWrapper.querySelector(".task-panel");
+
+    // load animation for 1st render of panel
+    if (!taskPanel){
+        mainWrapper.classList.add("panel-open");
+        
+        const taskPanel = document.createElement("div");
+        taskPanel.classList.add("task-panel");
+        
+        const heading = document.createElement("h3");
+        heading.classList.add("panel-date-title")
+        heading.textContent = "Memo: " + createDateString(activeDate);
+        
+        const panelBody = document.createElement("div");
+        panelBody.classList.add("panel-body")
+        
+        const form = document.createElement("form");
+        form.setAttribute('id', 'task-form')
+
+        const topicLabel = document.createElement("label");
+        topicLabel.setAttribute('for', 'task-topic');
+        topicLabel.textContent = "Topic *";
+        
+        const topicInput = document.createElement("input");
+        topicInput.setAttribute('type', 'text');
+        topicInput.setAttribute('id', 'task-topic');
+        topicInput.classList.add('auto-grow');
+        topicInput.required = true;
+        topicInput.setAttribute('placeholder', 'Web Engineering Quiz');
+        
+        const descLabel = document.createElement("label");
+        descLabel.setAttribute('for', 'task-desc')
+        descLabel.textContent = "Description";
+        
+        const descInput = document.createElement('textarea');
+        descInput.setAttribute('id', 'task-desc');
+        descInput.classList.add('auto-grow');
+        descInput.setAttribute('rows', 2);
+        descInput.setAttribute('placeholder', 'Syllabus: Advanced JS and PHP');
+        
+        const submitBtn = document.createElement('button');
+        submitBtn.type = 'submit';
+        submitBtn.className = 'save-btn';
+        submitBtn.textContent = 'Save Task';
+        
+        form.addEventListener('submit', handleSaveTask);
+        
+        const taskList = document.createElement("div");
+        taskList.setAttribute('id', "task-list");
+        
+        const line = document.createElement("hr");
+        line.classList.add("line");
+        
+        form.append(topicLabel, topicInput, descLabel, descInput, submitBtn);
+        
+        //create panel with form, line and list
+        panelBody.appendChild(form);
+        panelBody.appendChild(line);
+        panelBody.appendChild(taskList);
+        
+        // add heading adn panel to taskPanel
+        taskPanel.appendChild(heading);
+        taskPanel.appendChild(panelBody);
+        
+        taskPanelWrapper.appendChild(taskPanel);
+
+        requestAnimationFrame(() => {
+            taskPanel.classList.add('slide-in');
+        });
+    }
+    //updates to already existing panel
+    const heading = taskPanel.querySelector(".panel-date-title");
+    if (heading) {
+        heading.textContent = "Memo: " + createDateString(activeDate);
+    }
+    renderTaskList();
 }
 
 function getPrevMonthDate(year, month){
@@ -189,32 +327,28 @@ function formatDateKey(dateObj) {
     return `${y}-${m}-${d}`;
 }
 
-function handleCellClick(dateObj) {
-    curr_date = dateObj;
-    activeDateKey = formatDateKey(dateObj);
-
-    // Update panel title header to reflect selected day
-    document.querySelector('#panel-date-title').innerHTML = `Add Memo (${createDateString(dateObj)})`;
-    
-    renderCalendar(mode, curr_date.getFullYear(), curr_date.getMonth(), curr_date.getDate());
-    renderTaskList();
-}
 
 function renderTaskList() {
     const listContainer = document.querySelector('#task-list');
+    if (!listContainer) return;
     listContainer.innerHTML = "";
 
     if (!activeDateKey) {
-        activeDateKey = formatDateKey(curr_date);
+        activeDateKey = formatDateKey(activeDate);
     }
-
+    
     const tasks = taskStore[activeDateKey] || [];
     if (tasks.length === 0) {
-        listContainer.innerHTML = "<p style='color: #777; margin-bottom: 1rem;'>No tasks recorded for this day.</p>";
+        
+        const desc = document.createElement("p");
+        desc.textContent = 'No tasks recorded for this day';
+        desc.classList.add('noevent-desc');
+        listContainer.append(desc);
         return;
     }
-
+    
     tasks.forEach(task => {
+        console.log("rendering lists for active date: ", activeDateKey);
         const item = document.createElement('div');
         item.className = 'task-item';
 
@@ -235,6 +369,7 @@ function renderTaskList() {
 }
 
 function handleSaveTask(event) {
+    console.log("handleSaveTask triggered!");
     event.preventDefault();
 
     const topicInput = document.querySelector('#task-topic');
@@ -246,7 +381,7 @@ function handleSaveTask(event) {
     if (!topic) return;
 
     if (!activeDateKey) {
-        activeDateKey = formatDateKey(curr_date);
+        activeDateKey = formatDateKey(activeDate);
     }
 
     if (!taskStore[activeDateKey]) {
@@ -255,7 +390,7 @@ function handleSaveTask(event) {
 
     taskStore[activeDateKey].push({ topic, description });
 
-    topicInput.value = ""; //reset values at teh end
+    topicInput.value = ""; //reset values at the end
     descInput.value = "";
 
     renderTaskList();

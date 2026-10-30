@@ -1,132 +1,215 @@
-*{
+* {
     margin: 0;
 }
+
 @font-face {
     font-family: 'Fraunces';
     src: url('./fonts/Fraunces-VariableFont_SOFT\,WONK\,opsz\,wght.ttf');
 }
+
 @font-face {
     font-family: 'PlayWrite';
     src: url('./fonts/PlaywriteDEGrund-VariableFont_wght.ttf');
 }
-body{
+
+body {
     font-family: 'Fraunces', 'Times New Roman', Times, serif;
 }
-
-.nav-header{
+.nav-header {
     display: flex;
     flex-direction: row;
     margin: 2rem;
+    padding: 0 1rem;
 }
-#current-date{
+#current-date {
     font-family: 'PlayWrite', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: x-large;
     font-weight: bold;
-    flex:1;
+    flex: 1;
 }
-.view-current{
+.view-current {
     display: flex;
     flex-direction: row;
     gap: 1rem;
 }
-.view-current btn{
-    font-size: large;
+.view-current button {
+    font-family: 'PlayWrite', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border: 2px solid purple;
+    background-color: #fff9f2;
+    border-radius: 8px;
+    cursor: pointer;
 }
-.main-wrapper{
+.view-current button:hover {
+    background-color:  rgb(255, 220, 179);
+}
+.switch-btn:hover {
+    background-color:  rgb(255, 220, 179) !important;
+}
+
+.main-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
-#calendar-wrapper{
+
+#calendar-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 50%;
 }
-.day-wrapper{
+
+.day-wrapper {
     display: grid;
     grid-template-columns: repeat(7, 7rem);
     grid-template-rows: repeat(1, 3rem);
     background-color: purple;
     color: white;
 }
-.days{
+
+.days {
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px rgba(0, 0, 0, 0.146) solid;
-    border-collapse: collapse;
     border-style: solid;
     font-family: 'PlayWrite', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bold;
     font-size: large;
-}   
-#cell-grid{
+}
+
+#cell-grid {
     display: grid;
     grid-template-columns: repeat(7, 7rem);
     grid-template-rows: repeat(5, 7rem);
     font-size: large;
 }
 
-.day-cell{
+.day-cell {
     font-family: 'Fraunces', 'Times New Roman', Times, serif;
     border: 1px rgba(0, 0, 0, 0.146) solid;
     border-collapse: collapse;
-    padding: .04rem;
+    padding: .3rem 0 0 .3rem;
+    box-sizing: border-box;
     min-height: 7rem;
 }
-.day-cell:hover{
+
+.day-cell:hover {
     background-color: rgba(255, 166, 0, 0.25);
 }
-.day-cell:active{
+
+.day-cell:active {
     background-color: rgba(255, 166, 0, 0.25);
-    border-collapse: collapse;
-    border: 1px rgba(0, 0, 0, 0.5) solid;
 }
-.disabled-cell{
-    background-color: rgba(0, 0, 0, 0.06);
+
+.disabled-cell {
+    background-color: rgba(0, 0, 0, 0.09);
     pointer-events: none;
 }
-.current-cell{
+
+.current-cell {
     background-color: rgba(255, 166, 0, 0.486);
 }
-.current-cell:hover{
+
+.current-cell:hover {
     background-color: rgba(255, 166, 0, 0.7);
 }
-.switch-btn{
+
+.active-cell {
+    border: .1rem solid rgba(128, 0, 128, 0.7);
+    /* too large a number and the content placemenet goes off! */
+    box-shadow: inset 0 0 0 .08rem rgba(128, 0, 128, 0.7);
+    /* set inside box border but do not disturb padding, content placement */
+}
+
+.switch-btn {
     background-color: rgb(255, 86, 187);
     font-size: large;
 }
 
+.task-panel-wrapper {
+    background-color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 7rem;
+    width: 0; /* wrapper already existing in HTML, init width= 0 */
+    overflow: hidden;
+    transition: width 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.main-wrapper.panel-open .task-panel-wrapper {
+    width: 23rem; /* equal to task-panel width */
+}
 .task-panel {
-    width: 20rem; 
+    width: 23rem;
     background-color: rgb(255, 220, 179);
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    margin: 1rem;
     font-family: 'PlayWrite', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    
+    opacity: 0;
+    transform: translateX(25rem);
+    transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms ease;
+}
+.task-panel.slide-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.dot-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    justify-content: start;
+    gap: 4px;
+    width: 100%;
+    margin-bottom: 2.5rem;
+}
+.task-dot{
+    background-color: #6a006a;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
 }
 .panel-body {
     display: flex;
     flex-direction: column;
 }
+.line{
+    margin-top: 1rem;
+    border: none;
+    border-bottom: 10px solid #6a006a;
+    border-width: .1rem;
+}
+.noevent-desc{
+    color: #565656;
+}
 #task-list {
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
 }
+
 .task-item {
     background: #fff;
-    border: 1px solid #ddd;
     border-left: 4px solid purple;
     padding: 0.6rem;
     border-radius: 4px;
+    margin-top: .7rem;
+}
+#task-topic{
+    font-family: 'PlayWrite', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .task-item-topic {
     font-weight: bold;
-    margin-bottom: 0.2rem;
 }
 .task-item-desc {
     font-size: 0.9rem;
@@ -136,9 +219,21 @@ body{
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
-    border-top: 1px solid #ddd;
     padding-top: 1rem;
 }
+
+form label{
+    font-weight: bold;
+}
+
+.auto-grow {
+    width: 100%;
+    resize: vertical; /* restrict horizontal width resizes */
+    box-sizing: border-box;
+    min-height: 2rem;
+    padding: .5rem;
+}
+
 .save-btn {
     background-color: purple;
     color: white;
@@ -154,6 +249,7 @@ body{
 .save-btn:hover {
     background-color: #6a006a;
 }
+
 .day-cell {
     position: relative;
     display: flex;

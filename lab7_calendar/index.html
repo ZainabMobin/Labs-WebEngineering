@@ -41,21 +41,13 @@
                 <div class="days">Fri</div>
                 <div class="days">Sat</div>
             </div>
-            <div id="cell-grid"></div> <!-- append day cells to this wrapper grid -->
+            <div id="cell-grid">
+                <!-- append day cells to this wrapper grid. Populated via JS -->
+            </div> 
         </div>
-        <!-- panel for adding memo information -->
-        <div class="task-panel">
-            <h3 id="panel-date-title"><u>Add Memo</u></h3>
-            <div class="panel-body">
-                <div id="task-list"></div>
-                <form id="task-form" onsubmit="handleSaveTask(event)">
-                    <label for="task-topic"><b>Topic *</b></label>
-                    <input type="text" id="task-topic" required placeholder="Web Engineering Quiz">
-                    <label for="task-desc"><b>Description</b></label>
-                    <textarea id="task-desc" rows="2" placeholder="Syllabus: Advanced JS and PHP"></textarea>
-                    <button type="submit" class="save-btn">Save Task</button>
-                </form>
-            </div>
+
+        <div class="task-panel-wrapper">
+            <!-- panel for adding memo information, populated via JS -->
         </div>
     </div>
         
