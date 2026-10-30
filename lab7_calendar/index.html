@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 7</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body onload="initializeView()">
+    
+    <!-- have atleast 28 days -->
+
+    <!-- days div must be according to the month day value -->
+    <!-- Preceeding/succeding days not in the current month must be disabled in the view (no click, dark gray colour)  -->
+
+    <!-- link month days from js date object?  -->
+
+        <!-- feb = 29 for leap year --> 
+
+    <!-- start with current date -->
+   
+    <!-- days divs set in stone -->
+
+    <div class="nav-header">
+        <div id="current-date"></div>
+        <div class="view-current">
+            <button onclick="switchMode()" class="switch-btn" title="Click to change view"></button>
+            <button onclick="navigateBack()">Back</button>
+            <button onclick="navigateForward()">Forward</button>
+        </div>
+    </div>
+
+    <div class="main-wrapper">  <!-- contains calendar, and memo form  -->
+        <div id="calendar-wrapper">
+            <div class="day-wrapper">
+                <div class="days">Sun</div>
+                <div class="days">Mon</div>
+                <div class="days">Tue</div>
+                <div class="days">Wed</div>
+                <div class="days">Thu</div>
+                <div class="days">Fri</div>
+                <div class="days">Sat</div>
+            </div>
+            <div id="cell-grid"></div> <!-- append day cells to this wrapper grid -->
+        </div>
+        <!-- panel for adding memo information -->
+        <div class="task-panel">
+            <h3 id="panel-date-title"><u>Add Memo</u></h3>
+            <div class="panel-body">
+                <div id="task-list"></div>
+                <form id="task-form" onsubmit="handleSaveTask(event)">
+                    <label for="task-topic"><b>Topic *</b></label>
+                    <input type="text" id="task-topic" required placeholder="Web Engineering Quiz">
+                    <label for="task-desc"><b>Description</b></label>
+                    <textarea id="task-desc" rows="2" placeholder="Syllabus: Advanced JS and PHP"></textarea>
+                    <button type="submit" class="save-btn">Save Task</button>
+                </form>
+            </div>
+        </div>
+    </div>
+        
+    <script src="./script.js"></script>
+</body>
+</html>

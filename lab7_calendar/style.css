@@ -1,0 +1,163 @@
+*{
+    margin: 0;
+}
+@font-face {
+    font-family: 'Fraunces';
+    src: url('./fonts/Fraunces-VariableFont_SOFT\,WONK\,opsz\,wght.ttf');
+}
+@font-face {
+    font-family: 'PlayWrite';
+    src: url('./fonts/PlaywriteDEGrund-VariableFont_wght.ttf');
+}
+body{
+    font-family: 'Fraunces', 'Times New Roman', Times, serif;
+}
+
+.nav-header{
+    display: flex;
+    flex-direction: row;
+    margin: 2rem;
+}
+#current-date{
+    font-family: 'PlayWrite', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+    flex:1;
+}
+.view-current{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.view-current btn{
+    font-size: large;
+}
+.main-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#calendar-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.day-wrapper{
+    display: grid;
+    grid-template-columns: repeat(7, 7rem);
+    grid-template-rows: repeat(1, 3rem);
+    background-color: purple;
+    color: white;
+}
+.days{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px rgba(0, 0, 0, 0.146) solid;
+    border-collapse: collapse;
+    border-style: solid;
+    font-family: 'PlayWrite', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+    font-size: large;
+}   
+#cell-grid{
+    display: grid;
+    grid-template-columns: repeat(7, 7rem);
+    grid-template-rows: repeat(5, 7rem);
+    font-size: large;
+}
+
+.day-cell{
+    font-family: 'Fraunces', 'Times New Roman', Times, serif;
+    border: 1px rgba(0, 0, 0, 0.146) solid;
+    border-collapse: collapse;
+    padding: .04rem;
+    min-height: 7rem;
+}
+.day-cell:hover{
+    background-color: rgba(255, 166, 0, 0.25);
+}
+.day-cell:active{
+    background-color: rgba(255, 166, 0, 0.25);
+    border-collapse: collapse;
+    border: 1px rgba(0, 0, 0, 0.5) solid;
+}
+.disabled-cell{
+    background-color: rgba(0, 0, 0, 0.06);
+    pointer-events: none;
+}
+.current-cell{
+    background-color: rgba(255, 166, 0, 0.486);
+}
+.current-cell:hover{
+    background-color: rgba(255, 166, 0, 0.7);
+}
+.switch-btn{
+    background-color: rgb(255, 86, 187);
+    font-size: large;
+}
+
+.task-panel {
+    width: 20rem; 
+    background-color: rgb(255, 220, 179);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem;
+    font-family: 'PlayWrite', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.panel-body {
+    display: flex;
+    flex-direction: column;
+}
+#task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+.task-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-left: 4px solid purple;
+    padding: 0.6rem;
+    border-radius: 4px;
+}
+.task-item-topic {
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+}
+.task-item-desc {
+    font-size: 0.9rem;
+    color: #555;
+}
+#task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    border-top: 1px solid #ddd;
+    padding-top: 1rem;
+}
+.save-btn {
+    background-color: purple;
+    color: white;
+    border: none;
+    padding: 0.6rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'PlayWrite', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+}
+
+.save-btn:hover {
+    background-color: #6a006a;
+}
+.day-cell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
