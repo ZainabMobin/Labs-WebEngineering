@@ -1,0 +1,44 @@
+*{
+    padding: 0;
+}
+body {
+    font-family: monospace, Courier, consolas, 'Courier New';
+    margin: 3rem;
+}
+h1{
+    margin: auto;
+}
+.task{
+    font-family: Courier, 'Courier New';
+}   
+.task table, tr, td{
+    border-style: solid;
+    border-width: .1rem;
+    padding: .5rem;
+    border-collapse: collapse;
+}
+
+.task .chess-wrapper{
+    border-color: black;
+    border-width: .1rem;
+    border-style: solid;
+    width: fit-content;
+    margin: 1rem;
+    padding: 0;
+}
+.task .chess-row-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.task .chess-block{
+    width: 2rem;
+    height: 2rem;
+}
+.task .block-black{
+    background-color: black;
+}
+.task .block-white{
+    background-color:  whitesmoke;
+}
